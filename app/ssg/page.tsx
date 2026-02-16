@@ -1,17 +1,28 @@
-// Ini adalah contoh SSG (Default di Next.js App Router)
+// src/app/ssg/page.tsx
 export default async function SSGPage() {
-  // Mengambil data dari API publik (DummyJSON) 
-  const response = await fetch('https://dummyjson.com/products?limit=5');
-  const data = await response.json();
+  const res = await fetch('https://dummyjson.com/products?limit=4');
+  const data = await res.json();
 
   return (
-    <div className="p-10">
-      <h1 className="text-2xl font-bold mb-5">Daftar Produk (Teknik SSG)</h1>
-      <div className="grid gap-4">
-        {data.products.map((item: any) => (
-          <div key={item.id} className="p-4 border rounded shadow-sm">
-            <h2 className="font-semibold">{item.title}</h2>
-            <p className="text-gray-600">${item.price}</p>
+    <div className="max-w-7xl mx-auto py-16 px-6">
+      <div className="flex justify-between items-end mb-10">
+        <div>
+          <h2 className="text-3xl font-bold">Flash Sale Hari Ini</h2>
+          <p className="text-slate-500">Penawaran terbaik dengan harga statis (Teknik SSG).</p>
+        </div>
+        <div className="bg-red-500 text-white px-4 py-2 rounded-lg font-mono font-bold animate-pulse text-sm">
+          00 : 45 : 12
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {data.products.map((p: any) => (
+          <div key={p.id} className="bg-white rounded-2xl p-4 border border-blue-50/50 shadow-sm">
+            <img src={p.thumbnail} alt={p.title} className="w-full h-40 object-contain mb-4 bg-slate-50 rounded-xl" />
+            <h4 className="font-bold text-slate-800 line-clamp-1">{p.title}</h4>
+            <div className="flex items-center gap-2 mt-2">
+              <span className="text-blue-600 font-extrabold">${p.price}</span>
+              <span className="text-xs text-slate-400 line-through">$999</span>
+            </div>
           </div>
         ))}
       </div>
